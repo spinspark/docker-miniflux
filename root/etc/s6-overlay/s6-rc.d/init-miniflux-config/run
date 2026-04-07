@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+# copy config
+if [[ ! -f /config/miniflux.conf ]]; then
+    cp /defaults/miniflux.conf /config/miniflux.conf
+fi
+
+if [[ -z ${LSIO_NON_ROOT_USER} ]]; then
+    # permissions
+    lsiown -R abc:abc \
+        /app \
+        /config
+fi
