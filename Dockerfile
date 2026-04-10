@@ -1,9 +1,12 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:edge AS buildstage
+FROM --platform=${BUILDPLATFORM} ghcr.io/linuxserver/baseimage-alpine:edge AS buildstage
 
 # build variables
+ARG BUILD_DATE
 ARG MINIFLUX_RELEASE
+ARG TARGETOS
+ARG TARGETARCH
 
 RUN \
   echo "**** install build packages ****" && \
@@ -27,10 +30,9 @@ RUN \
     /tmp/miniflux --strip-components=1 && \
   echo "**** compile miniflux  ****" && \
   cd /tmp/miniflux && \
-  CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build \
+  CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
     -ldflags "-s -w \
     -X miniflux.app/v2/internal/version.Version=${MINIFLUX_RELEASE} \
-    -X miniflux.app/v2/internal/version.Commit=${VERSION} \
     -X miniflux.app/v2/internal/version.BuildDate=${BUILD_DATE}" \
     -o /app/miniflux
 
