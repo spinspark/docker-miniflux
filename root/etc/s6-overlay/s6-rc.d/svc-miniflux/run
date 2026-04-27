@@ -3,10 +3,10 @@
 
 if [[ -z ${LSIO_NON_ROOT_USER} ]]; then
     exec \
-        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 8337" \
-            s6-setuidgid abc /app/miniflux -config-file /config/miniflux.conf
+        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 8080" \
+        s6-setuidgid abc /app/miniflux -config-file /config/miniflux.conf
 else
     exec \
-        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 8337" \
-            /app/miniflux -config-file /config/miniflux.conf
+        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 8080" \
+        /app/miniflux -config-file /config/miniflux.conf
 fi
