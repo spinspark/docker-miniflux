@@ -46,11 +46,11 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.23
 ARG BUILD_DATE
 ARG VERSION
 ARG MINIFLUX_RELEASE
-LABEL build_version="version: ${VERSION} Build-date: ${BUILD_DATE}"
-LABEL maintainer="justy777"
+LABEL build_version="spinspark version: ${VERSION} Build-date: ${BUILD_DATE}"
+LABEL maintainer="spinspark"
 
 RUN \
-  printf "version: %s\nBuild-date: %s" "${VERSION}" "${BUILD_DATE}"  > /build_version
+  printf "spinspark version: %s\nBuild-date: %s" "${VERSION}" "${BUILD_DATE}"  > /build_version
 
 # add miniflux
 COPY --from=buildstage /app/miniflux /app/miniflux
